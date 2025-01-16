@@ -1,0 +1,13 @@
+<h1>Clients</h1>
+
+<div id="clients">
+  <% @clients.each do |client| %>
+    <div>
+      <%= client.name %><br>
+      <%= client.surname %><br>
+      <%= client.patronymic %><br>
+      <%= client.email %><br>
+      <%= client.phone_number %><br>
+    </div>
+  <% end %>
+</div>
