@@ -1,13 +1,23 @@
 <h1>Clients</h1>
 
-<div id="clients">
-  <% @clients.each do |client| %>
-    <div>
-      <%= client.name %><br>
-      <%= client.surname %><br>
-      <%= client.patronymic %><br>
-      <%= client.email %><br>
-      <%= client.phone_number %><br>
-    </div>
-  <% end %>
-</div>
+<%= link_to "New client", new_client_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Patronymic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.name %></td>
+        <td><%= client.surname %></td>
+        <td><%= client.patronymic %></td>
+        <td><a href="/clients/<%= client.id %>">Show</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
