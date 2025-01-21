@@ -1,13 +1,17 @@
 <h1>Client Details</h1>
 
-<div style="font-family: Arial, sans-serif; line-height: 1.6;">
-  <p><strong>Name:</strong> <%= @client.name %></p>
-  <p><strong>Surname:</strong> <%= @client.surname %></p>
-  <p><strong>Patronymic:</strong> <%= @client.patronymic %></p>
-  <p><strong>Email:</strong> <%= @client.email %></p>
-  <p><strong>Phone Number:</strong> <%= @client.phone_number %></p>
+<div class="details">
+  <ul>
+    <li><strong>Name:</strong> <%= @client.name %></li>
+    <li><strong>Surname:</strong> <%= @client.surname %></li>
+    <li><strong>Patronymic:</strong> <%= @client.patronymic %></li>
+    <li><strong>Email:</strong> <%= @client.email %></li>
+    <li><strong>Phone Number:</strong> <%= @client.phone_number %></li>
+  </ul>
 </div>
 
-<%= link_to "Edit", edit_client_path(@client), class: "button-link" %><br>
-<%= button_to "Delete", @client, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button-link"%>
-<%= link_to "Back", clients_path, class: "button-link back-button" %>
+<div class="actions">
+  <%= link_to "Edit", edit_client_path(@client), class: "button-link" %><br>
+  <%= button_to "Delete", @client, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button-link"%>
+  <%= link_to "Back", clients_path, class: "button-link back-button" %>
+</div>

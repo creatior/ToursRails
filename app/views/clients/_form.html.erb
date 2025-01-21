@@ -1,25 +1,25 @@
-<%= form_with model: @client do |form| %>
-  <div>
-    <%= form.label :surname %>
-    <%= form.text_field :surname %>
+<%= form_with model: @client, html: { class: 'model-form' } do |form| %>
+  <div class="form-group">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-input' %>
   </div>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :surname, class: 'form-label' %>
+    <%= form.text_field :surname, class: 'form-input' %>
   </div>
-  <div>
-    <%= form.label :patronymic %>
-    <%= form.text_field :patronymic %>
+  <div class="form-group">
+    <%= form.label :patronymic, class: 'form-label' %>
+    <%= form.text_field :patronymic, class: 'form-input' %>
   </div>
-  <div>
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.text_field :email, class: 'form-input' %>
   </div>
-  <div>
-    <%= form.label :phone_number %>
-    <%= form.text_field :phone_number %>
+  <div class="form-group">
+    <%= form.label :phone_number, class: 'form-label' %>
+    <%= form.text_field :phone_number, class: 'form-input' %>
   </div>
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit 'Submit', class: 'form-submit' %>
   </div>
 <% end %>

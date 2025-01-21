@@ -1,0 +1,25 @@
+<h1 class="centered">Tours</h1>
+
+<div class="return-button-container">
+  <%= link_to "Return", root_path, class: "button-link return-button" %>
+</div>
+
+<%= link_to "New tour", new_tour_path, class: "button-link" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tours.each do |tour| %>
+      <tr>
+        <td><%= tour.name %></td>
+        <td><%= tour.duration %></td>
+        <td><a href="/tours/<%= tour.id %>">Show</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

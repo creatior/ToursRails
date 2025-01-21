@@ -1,0 +1,16 @@
+<h1>Tour Details</h1>
+
+<div class="details">
+    <ul>
+        <li><strong>Name:</strong> <%= @tour.name %></li>
+        <li><strong>Description:</strong> <%= @tour.description %></li>
+        <li><strong>Duration:</strong> <%= @tour.duration %> days</li>
+        <li><strong>Price:</strong> <%= @tour.price %></li>
+    </ul>
+</div>
+
+<div class="actions">
+    <%= link_to "Edit", edit_tour_path(@tour), class: "button-link" %><br>
+    <%= button_to "Delete", @tour, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button-link"%>
+    <%= link_to "Back", tours_path, class: "button-link back-button" %>
+</div>
