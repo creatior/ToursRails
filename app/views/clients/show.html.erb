@@ -8,5 +8,6 @@
   <p><strong>Phone Number:</strong> <%= @client.phone_number %></p>
 </div>
 
-<%= link_to "Edit", edit_client_path(@client) %><br>
-<%= link_to "Back", clients_path, class: "btn btn-secondary" %>
+<%= link_to "Edit", edit_client_path(@client), class: "button-link" %><br>
+<%= button_to "Delete", @client, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button-link"%>
+<%= link_to "Back", clients_path, class: "button-link back-button" %>
