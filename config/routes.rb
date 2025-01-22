@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :bookings
 
   root "home#index"
+  match "*unmatched", to: "application#render_404", via: :all
 end
