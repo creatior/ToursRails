@@ -1,0 +1,15 @@
+<h1>Booking Details</h1>
+
+<div class="details">
+  <ul>
+    <li><strong>Booking date:</strong> <%= @booking.booking_date.strftime("%d %B %Y") %></li>
+    <li><strong>Tour name:</strong> <%= link_to @booking.tour.name, tour_path(@booking.tour.id) %></li>
+    <li><strong>Client Initials:</strong> <%= link_to "#{@booking.client.surname} #{@booking.client.name.first}. #{@booking.client.patronymic.first}.", client_path(@booking.client.id) %></li>
+  </ul>
+</div>
+
+<div class="actions">
+  <%= link_to "Edit", edit_booking_path(@booking), class: "button-link" %><br>
+  <%= button_to "Delete", @booking, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button-link"%>
+  <%= link_to "Back", bookings_path, class: "button-link back-button" %>
+</div>

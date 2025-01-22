@@ -1,0 +1,25 @@
+<h1 class="centered">Bookings</h1>
+
+<div class="return-button-container">
+  <%= link_to "Return", root_path, class: "button-link return-button" %>
+</div>
+
+<%= link_to "New booking", new_booking_path, class: "button-link" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Booking date</th>
+      <th>Tour name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.booking_date %></td>
+        <td><%= booking.tour.name %></td>
+        <td><a href="/bookings/<%= booking.id %>">Show</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

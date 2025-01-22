@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_21_135317) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_22_134617) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_21_135317) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "bookings", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.integer "tour_id", null: false
+    t.date "booking_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_bookings_on_client_id"
+    t.index ["tour_id"], name: "index_bookings_on_tour_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "surname"
@@ -70,4 +80,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_21_135317) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "clients"
+  add_foreign_key "bookings", "tours"
 end
