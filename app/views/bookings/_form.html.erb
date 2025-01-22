@@ -1,20 +1,28 @@
 <%= form_with(model: @booking, local: true, html: { class: 'model-form' }) do |form| %>
-  
   <div class="form-group">
     <%= form.label :client_id, "Client", class: 'form-label' %>
     <%= form.collection_select :client_id, @clients, :id, 
        lambda { |client| "#{client.surname} #{client.name.first}. #{client.patronymic.first}." }, 
        prompt: true, class: 'form-input' %>
+    <% if @booking.errors[:client_id].any? %>
+      <div class="error-message"><%= @booking.errors[:client_id].join(", ") %></div>
+    <% end %>
   </div>
 
   <div class="form-group">
     <%= form.label :tour_id, "Tour", class: 'form-label' %>
     <%= form.collection_select :tour_id, @tours, :id, :name, prompt: true, class: 'form-input'  %>
+    <% if @booking.errors[:tour_id].any? %>
+      <div class="error-message"><%= @booking.errors[:tour_id].join(", ") %></div>
+    <% end %>
   </div>
 
   <div class="form-group">
     <%= form.label :booking_date, class: 'form-label' %>
-    <%= form.date_select :booking_date, class: 'form-input'  %>
+    <%= form.date_select :booking_date, class: 'form-input' %>
+    <% if @booking.errors[:booking_date].any? %>
+      <div class="error-message"><%= @booking.errors[:booking_date].join(", ") %></div>
+    <% end %>
   </div>
 
   <div class="actions">

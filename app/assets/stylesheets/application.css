@@ -23,6 +23,12 @@ td {
     background-color: #fff;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25em;
+}
+
 .return-button-container {
     position: absolute;
     top: 40px;
