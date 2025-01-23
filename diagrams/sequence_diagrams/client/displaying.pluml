@@ -1,0 +1,38 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/home.html" as home
+participant "View:\nclients/index.html" as index
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+database "Database" as db
+
+user -> home: open root_path
+activate home
+home --> user: render home page
+deactivate home
+
+user -> home: click "Clients"
+activate home
+home -> contr: GET /clients
+deactivate home
+
+activate contr
+contr -> model: Client.all
+
+activate model
+model -> db: SELECT * FROM
+
+activate db
+db --> model: return data
+deactivate db
+
+model --> contr: return collection
+deactivate model
+
+contr --> index: render index.html
+activate index
+deactivate contr
+
+index --> user: display clients data
+deactivate index
+@enduml

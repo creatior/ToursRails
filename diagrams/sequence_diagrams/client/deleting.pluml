@@ -1,0 +1,52 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/index.html" as index
+participant "View:\nclients/show.html" as show
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+database "Database" as db
+
+user -> show: click "Delete"
+activate show
+show -> show: turbo_confirm
+show --> user: display "Are you sure?"
+
+user -> show: click "Yes"
+
+show -> contr: DELETE /clients/:id
+deactivate show
+
+activate contr
+contr -> model: Client.find(params[:id])
+
+activate model
+model -> db: SELECT * FROM ... WHERE id=:id
+activate db
+db --> model: return data
+deactivate db
+
+model -> contr: return Client
+deactivate model
+
+contr -> model: @client.destroy
+activate model
+
+model -> db: DELETE FROM ... WHERE id=:id
+activate db
+
+db --> model: return success
+deactivate db
+
+model --> contr: return
+deactivate model
+
+contr -> contr: redirect_to clients_path
+contr --> index: render index.html
+deactivate contr
+
+activate index
+index --> user: display clients info
+deactivate index
+
+
+@enduml

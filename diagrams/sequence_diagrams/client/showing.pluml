@@ -1,0 +1,34 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/index.html" as index
+participant "View:\nclients/show.html" as show
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+database "Database" as db
+
+user -> index: click "Show"
+activate index
+
+index -> contr: GET /clients/:id
+deactivate index
+activate contr
+
+contr -> model: Client.find(params[:id])
+activate model
+
+model -> db: SELECT * FROM ... WHERE id=:id
+activate db
+db --> model: return data
+deactivate db
+
+model --> contr: return Client
+deactivate model
+
+contr --> show: render show.html
+deactivate contr
+
+activate show
+show --> user: display client info
+deactivate show
+
+@enduml

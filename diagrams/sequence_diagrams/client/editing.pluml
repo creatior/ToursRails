@@ -1,0 +1,50 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/index.html" as index
+participant "View:\nclients/edit.html" as edit
+participant "View:\nclients/_form.html" as form
+participant "View:\nclients/show.html" as show
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+database "Database" as db
+
+user -> index: click "Edit user"
+activate index
+
+index -> contr: GET /clients/edit
+deactivate index
+activate contr
+
+contr --> edit: render new.html
+deactivate contr
+
+activate edit
+edit -> form: render _form.html
+deactivate edit
+
+activate form
+form --> user: display form
+user -> form: edit form
+user -> form: enter "Submit"
+form -> contr: PATCH /clients/:id
+deactivate form
+
+activate contr
+
+contr -> model: @client.update(client_params)
+activate model
+model -> db: UPDATE SET ... WHERE id = :id
+activate db
+db --> model: return success
+deactivate db
+model --> contr: return true
+deactivate model
+
+contr -> contr: redirect_to @client
+contr --> show: render show.html
+deactivate contr
+
+activate show
+show --> user: show client info
+deactivate show
+@enduml

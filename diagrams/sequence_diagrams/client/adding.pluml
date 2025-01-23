@@ -1,0 +1,59 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/index.html" as index
+participant "View:\nclients/new.html" as new
+participant "View:\nclients/_form.html" as form
+participant "View:\nclients/show.html" as show
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+database "Database" as db
+
+user -> index: click "New user"
+activate index
+
+index -> contr: GET /clients/new
+deactivate index
+activate contr
+
+contr --> new: render new.html
+deactivate contr
+
+activate new
+new -> form: render _form.html
+deactivate new
+
+activate form
+form --> user: display form
+user -> form: complete form
+user -> form: enter "Submit"
+form -> contr: POST /clients
+deactivate form
+
+activate contr
+contr -> model: Client.new(client_params)
+activate model
+model --> contr: return Client
+deactivate model
+
+contr -> model: save
+activate model
+model -> model: validates
+
+activate model
+deactivate model
+
+model -> db: INSERT INTO
+activate db
+db --> model: return success
+deactivate db
+model --> contr: return true
+deactivate model
+
+contr -> contr: redirect_to @client
+contr --> show: render show.html
+deactivate contr
+
+activate show
+show --> user: show client info
+deactivate show
+@enduml
