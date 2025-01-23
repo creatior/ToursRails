@@ -6,6 +6,7 @@ class ClientsController < ApplicationController
   end
 
   def show
+    @client = Client.includes(:bookings).find(params[:id])
   end
 
   def new

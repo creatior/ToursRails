@@ -1,0 +1,109 @@
+@startuml
+actor "User" as user
+participant "View:\nclients/index.html" as index
+participant "View:\nclients/new.html" as new
+participant "View:\nclients/_form.html" as form
+participant "View:\nclients/show.html" as show
+participant "Controller:\nClientsController" as contr
+participant "Model:\nClient" as model
+participant "ActiveRecord\n::Persistence" as persist
+participant "ActiveRecord\n::Validations" as valid
+participant "ActiveRecord\n::Validations\n::ClassMethods" as validmethods
+participant "UniquenessValidator" as unval
+database "Database" as db
+
+user -> index: click "New user"
+activate index
+
+index -> contr: GET /clients/new
+deactivate index
+activate contr
+
+contr --> new: render new.html
+deactivate contr
+
+activate new
+new -> form: render _form.html
+deactivate new
+
+activate form
+form --> user: display form
+user -> form: complete form
+user -> form: enter "Submit"
+form -> contr: POST /clients
+deactivate form
+
+activate contr
+contr -> model: Client.new(client_params)
+activate model
+model --> contr: return Client
+deactivate model
+
+contr -> model: save
+activate model
+
+alt validation check failed
+
+model -> valid: save
+activate valid
+
+valid -> validmethods: validates_uniqueness_of
+activate validmethods
+
+validmethods -> unval: validate_each
+activate unval
+unval --> validmethods: return
+deactivate unval
+
+validmethods --> valid: raise RecordInvalid
+deactivate validmethods
+
+valid --> model: return false
+deactivate valid
+
+end
+
+
+model -> valid: save
+activate valid
+
+valid -> validmethods: validates_uniqueness_of
+activate validmethods
+
+validmethods -> unval: validate_each
+activate unval
+unval --> validmethods: return
+deactivate unval
+
+validmethods --> valid: return true
+deactivate validmethods
+
+valid -> persist: save
+deactivate valid
+activate persist
+
+persist -> persist: create_or_update
+persist -> persist: _create_record
+activate persist
+
+persist -> db: INSERT INTO
+activate db
+db --> persist: return success
+deactivate db
+
+persist --> model: return true
+deactivate persist
+
+model --> contr: return true
+deactivate model
+deactivate persist
+
+contr -> contr: redirect_to @client
+contr --> show: render show.html
+deactivate contr
+
+activate show
+show --> user: show client info
+deactivate show
+
+@enduml

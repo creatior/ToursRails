@@ -5,8 +5,10 @@ class Client < ApplicationRecord
   validates :name, format: { without: /\s/, message: "must not contain spaces" }
   validates :surname, format: { without: /\s/, message: "must not contain spaces" }
   validates :patronymic, format: { without: /\s/, message: "must not contain spaces" }
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "invalid email address" }
-  validates :phone_number, presence: true, format: { with: /\A8\d{10}\z/, message: "must start with 8 and be followed by 10 digits" }
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "invalid email address" }, uniqueness: true
+  validates :phone_number, presence: true, format: { with: /\A8\d{10}\z/, message: "must start with 8 and be followed by 10 digits" }, uniqueness: true
+
+  has_many :bookings
 
   before_validation :capitalize_names
 
