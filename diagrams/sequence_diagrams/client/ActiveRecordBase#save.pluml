@@ -1,0 +1,48 @@
+@startuml
+actor Controller
+participant "ActiveRecord::Base" as ARBase
+participant "ActiveModel::Validations" as ARValidations
+participant "ActiveRecord::Validations" as ARARValidations
+participant "ActiveRecord::Callbacks" as ARCallbacks
+participant "ActiveRecord::Persistence" as ARPersistence
+participant "ActiveRecord::ConnectionAdapters::TransactionManager" as TransactionManager
+
+Controller -> ARBase : save
+activate ARBase
+ARBase -> TransactionManager : begin_transaction
+activate TransactionManager
+TransactionManager --> ARBase : transaction started
+deactivate TransactionManager
+
+ARBase -> ARValidations : valid?
+activate ARValidations
+ARValidations -> ARARValidations : run_validations!
+activate ARARValidations
+ARARValidations --> ARValidations : result
+deactivate ARARValidations
+ARValidations --> ARBase : validation result
+deactivate ARValidations
+
+ARBase -> ARCallbacks : before_save
+activate ARCallbacks
+ARCallbacks --> ARBase : before_save completed
+deactivate ARCallbacks
+
+ARBase -> ARPersistence : create/update
+activate ARPersistence
+ARPersistence --> ARBase : SQL operation result
+deactivate ARPersistence
+
+ARBase -> ARCallbacks : after_save
+activate ARCallbacks
+ARCallbacks --> ARBase : after_save completed
+deactivate ARCallbacks
+
+ARBase -> TransactionManager : commit_transaction
+activate TransactionManager
+TransactionManager --> ARBase : transaction committed
+deactivate TransactionManager
+
+ARBase --> Controller : save result
+deactivate ARBase
+@enduml
